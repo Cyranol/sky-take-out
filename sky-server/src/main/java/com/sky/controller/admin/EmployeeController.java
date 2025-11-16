@@ -65,7 +65,6 @@ public class EmployeeController {
 
     /**
      * 退出
-     *
      * @return
      */
     @PostMapping("/logout")
@@ -86,7 +85,6 @@ public class EmployeeController {
         return Result.success();
     }
 
-
     /**
      * 员工分页查询
      * @param employeePageQueryDTO
@@ -101,6 +99,7 @@ public class EmployeeController {
     }
 
 
+
     /**
      * 员工账号状态修改
      * @param status
@@ -112,6 +111,34 @@ public class EmployeeController {
     public Result startOrStop(@PathVariable Integer status,Long id){
         log.info("启用禁用员工状态：{},{}", status,id);
         employeeService.startOrStop(status,id);
+        return Result.success();
+    }
+
+
+    /**
+     * 员工信息回显
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("员工信息回显")
+    public Result<Employee> getById(@PathVariable Long id){
+        log.info("查询员工信息：{}",id);
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result update(@RequestBody EmployeeDTO employeeDTO){
+        log.info("员工信息修改：{}",employeeDTO);
+        employeeService.update(employeeDTO);
         return Result.success();
     }
 }
